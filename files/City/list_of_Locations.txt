@@ -1,0 +1,7 @@
+DH1
+DH2
+Mini Mart
+Hostel:1B
+Hostel:2B
+Library
+SNU Lake
