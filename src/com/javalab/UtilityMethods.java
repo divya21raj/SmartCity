@@ -7,15 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class UtilityMethods
+class UtilityMethods
 {
-    public static void clrscr()
+    static void clrscr()
     {
         for(int i = 0; i<70; i++)     //works as clrscr()
             System.out.println();
     }
 
-    public static Location numSelectiontoLocation(int num, ArrayList<Location> locations)
+    static Location numSelectiontoLocation(int num, ArrayList<Location> locations)
     {
         Location location = null;
 
@@ -65,8 +65,10 @@ public class UtilityMethods
         BufferedWriter nbufferedWriter = new BufferedWriter(namefileWriter);
         BufferedWriter lbufferedWriter = new BufferedWriter(locfileWriter);
 
-        nbufferedWriter.write(user.getName() + "\n");
-        lbufferedWriter.write(user.getLocation().name + "\n");
+        nbufferedWriter.write(user.getName());
+        nbufferedWriter.newLine();
+        lbufferedWriter.write(user.getLocation().name);
+        lbufferedWriter.newLine();
 
         nbufferedWriter.close();
         lbufferedWriter.close();

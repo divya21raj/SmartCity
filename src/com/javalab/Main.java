@@ -10,20 +10,20 @@ import java.util.Scanner;
 
 public class Main
 {
-    static User currentUser;
+    private static User currentUser;
 
-    static City city;
+    private static City city;
 
-    static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
 
-    static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) throws IOException
     {
         titleMenu();
     }
 
-    static void initUsers() throws IOException
+    private static void initUsers() throws IOException
     {
         FileReader namefileReader = new FileReader("files/Users/Names.txt");
         FileReader locfileReader = new FileReader("files/Users/Locations.txt");
@@ -54,25 +54,28 @@ public class Main
 
     }
 
-    static void titleMenu() throws IOException
+    private static void titleMenu() throws IOException
     {
         int cho;
 
-        System.out.printf("\n1.Start\n2.Exit");
-        cho = Integer.parseInt(bufferedReader.readLine());
-
-        if(cho == 1)
+        do
         {
-            city = new City("SNU");
+            System.out.printf("\n1.Start\n2.Exit");
+            cho = Integer.parseInt(bufferedReader.readLine());
 
-            initUsers();
+            if(cho == 1)
+            {
+                city = new City("SNU");
 
-            mainScreen();
-        }
+                initUsers();
 
+                mainScreen();
+            }
+
+        }while(cho == 1);
     }
 
-    static void mainScreen() throws IOException
+    private static void mainScreen() throws IOException
     {
         userInit();
 
@@ -80,7 +83,7 @@ public class Main
 
     }
 
-    static void userInit() throws IOException
+    private static void userInit() throws IOException
     {
         int i = 0;
         Scanner scanner = new Scanner(System.in);
