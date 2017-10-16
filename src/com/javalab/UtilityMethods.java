@@ -59,8 +59,8 @@ class UtilityMethods
 
     static void writeUser(User user) throws IOException
     {
-        FileWriter namefileWriter = new FileWriter("files/Users/Names.txt");
-        FileWriter locfileWriter = new FileWriter("files/Users/Locations.txt");
+        FileWriter namefileWriter = new FileWriter("files/Users/Names.txt", true);
+        FileWriter locfileWriter = new FileWriter("files/Users/Locations.txt", true);
 
         BufferedWriter nbufferedWriter = new BufferedWriter(namefileWriter);
         BufferedWriter lbufferedWriter = new BufferedWriter(locfileWriter);
