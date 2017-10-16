@@ -16,6 +16,8 @@ public class Location
     {
         this.name = name;
 
+        adjacentLocations = new ArrayList<>();
+        adjacentLocationDistance = new ArrayList<>();
     }
 
 }

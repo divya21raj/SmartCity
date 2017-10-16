@@ -16,6 +16,8 @@ public class City
     {
         this.name = name;
 
+        locations = new ArrayList<>();
+
         FileReader fileReader = new FileReader("files/City/list_of_Locations.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
