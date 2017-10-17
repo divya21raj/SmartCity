@@ -25,16 +25,11 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-        titleMenu();
-    }
-
-    private static void titleMenu() throws IOException
-    {
         int cho;
 
         do
         {
-            System.out.printf("\n1.Start\n2.Exit");
+            System.out.printf("\n1.Start\n2.Exit\n");
             cho = Integer.parseInt(bufferedReader.readLine());
 
             if(cho == 1)
@@ -56,6 +51,8 @@ public class Main
         userInit();
 
         clrscr();
+
+
 
     }
 
