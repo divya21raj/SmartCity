@@ -1,18 +1,23 @@
 package com.javalab;
+
+import com.javalab.City.Location;
 import com.javalab.Storage.Storage;
+
+import static com.javalab.UtilityMethods.randomID;
 
 public abstract class Drone
 {
-    protected String id;
+    private String id;
 
-    protected String currentLocation;
+    private Location currentLocation;
 
     Storage storage;
 
     protected Drone()
     {
         storage = new Storage();
-        //initiate stuff willya...
+
+        id = randomID();
     }
 
     void photoCapture()
@@ -34,12 +39,12 @@ public abstract class Drone
         this.id = id;
     }
 
-    public String getCurrentLocation()
+    public Location getCurrentLocation()
     {
         return currentLocation;
     }
 
-    public void setCurrentLocation(String currentLocation)
+    public void setCurrentLocation(Location currentLocation)
     {
         this.currentLocation = currentLocation;
     }

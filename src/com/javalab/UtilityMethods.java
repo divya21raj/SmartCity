@@ -6,9 +6,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 class UtilityMethods
 {
+    static int j = 0;
+
     static void clrscr()
     {
         for(int i = 0; i<70; i++)     //works as clrscr()
@@ -75,5 +78,22 @@ class UtilityMethods
         namefileWriter.close();
         locfileWriter.close();
     }
+
+    static String randomID()
+    {
+        String id;
+
+        ArrayList<Integer> numList = new ArrayList<>();
+
+        for(int i=0; i<101; i++)
+            numList.add(i);
+
+        Collections.shuffle(numList);
+
+        id = Integer.toString(numList.get(j++));
+
+        return id;
+    }
+
 
 }

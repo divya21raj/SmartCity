@@ -1,0 +1,7 @@
+cop, tour, funny
+cop, tour, funny
+cop, tour
+cop, cop, tour
+cop, cop, tour
+cop, funny 
+cop, funny, tour

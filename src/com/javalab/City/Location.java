@@ -1,5 +1,7 @@
 package com.javalab.City;
 
+import com.javalab.Drone;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,12 +14,25 @@ public class Location
     ArrayList<Location> adjacentLocations;
     ArrayList<Double> adjacentLocationDistance;
 
+    private ArrayList<Drone> drones;
+
     Location(String name) throws IOException
     {
         this.name = name;
 
         adjacentLocations = new ArrayList<>();
         adjacentLocationDistance = new ArrayList<>();
+
+        drones = new ArrayList<>();
     }
 
+    public ArrayList<Drone> getDrones()
+    {
+        return drones;
+    }
+
+    public void setDrones(ArrayList<Drone> drones)
+    {
+        this.drones = drones;
+    }
 }

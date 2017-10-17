@@ -3,3 +3,5 @@ Mini Mart
 DH2
 Hostel:1B
 DH1
+Hostel:1B
+Mini Mart
