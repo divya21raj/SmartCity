@@ -4,6 +4,7 @@ import com.javalab.City.City;
 import com.javalab.City.Location;
 import com.javalab.Drones.CopDrone;
 import com.javalab.Drones.FunnyDrone;
+import com.javalab.Drones.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
 
 import java.io.*;
@@ -27,6 +28,13 @@ public class Main
     {
         int cho;
 
+        city = new City("SNU", 2d);
+
+        initUsers();
+
+        dronesInit();
+
+
         do
         {
             System.out.printf("\n1.Start\n2.Exit\n");
@@ -34,13 +42,11 @@ public class Main
 
             if(cho == 1)
             {
-                city = new City("SNU");
-
-                initUsers();
-
-                dronesInit();
+                userInit();
 
                 mainScreen();
+
+                saveProgress(users, city.locations);
             }
 
         }while(cho == 1);
@@ -48,10 +54,112 @@ public class Main
 
     private static void mainScreen() throws IOException
     {
-        userInit();
-
         clrscr();
 
+        int cho;
+        do
+        {
+            System.out.println("You are at " + currentUser.getLocation().name + ".");
+            System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " drones.");
+            System.out.println("We have some pretty knowledgeable drones flying around, try talking to them...");
+
+            System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Go some place else\n3.Log out\n");
+
+            cho = Integer.parseInt(bufferedReader.readLine());
+
+            switch(cho)
+            {
+                case 1:
+                    droneInteraction();
+                    break;
+
+                case 2:
+                    changeLocation();
+                    cho = 3;
+                    break;
+
+                default:
+                    cho = 3;
+                    break;
+            }
+
+        }while (cho != 3);
+
+    }
+
+    private static void droneInteraction()
+    {
+
+    }
+
+    private static void changeLocation() throws IOException
+    {
+        int i, cho, chom;
+
+        Scanner scanner = new Scanner(System.in);
+
+        do
+        {
+            i=1;
+            System.out.println("Where to?:");
+
+            for(Location location: city.locations)
+                System.out.printf("%d. %s\n", i++, location.name);
+
+            System.out.printf("%d. To previous menu...\n", i);
+            cho = Integer.parseInt(bufferedReader.readLine());
+
+            if(cho != i)
+            {
+                do
+                {
+                    Location newLocation = numSelectiontoLocation(cho, city.locations);
+                    System.out.printf("\nChoose mode of transport:\n1. Cab\n2. Feet\n3. Choose another location\n");
+                    chom = Integer.parseInt(bufferedReader.readLine());
+
+                    if(chom == 1)
+                    {
+                        Double travelCost = costCalc(city.locations, currentUser.getLocation(), newLocation, city.cabRate);
+
+                        System.out.println("That'll be " + travelCost + " Rs.");
+                        scanner.nextLine();
+
+                        if(currentUser.getMoney() < travelCost)
+                        {
+                            System.out.println("You're not rich enough to do this....you can do one of the following:");
+                            System.out.printf("1.Take this cab to the Mini Mart ATM\n2.Walk\n");
+
+                            int chop = Integer.parseInt(bufferedReader.readLine());
+
+                            if(chop == 1)
+                            {
+                                currentUser.setLocation(numSelectiontoLocation(2, city.locations));
+                                currentUser.setMoney(currentUser.getMoney() - travelCost);
+                                mainScreen();
+                            }
+
+                            else
+                            {
+                                currentUser.setLocation(newLocation);
+                                mainScreen();
+                                //do some health thingy here
+                            }
+                        }
+
+                        else
+                        {
+                            currentUser.setMoney(currentUser.getMoney() - travelCost);
+                            currentUser.setLocation(newLocation);
+                            mainScreen();
+                            chom = 3;
+                            cho = i;
+                        }
+                    }
+
+                }while (chom != 3);
+            }
+
+        }while (cho != i);
 
     }
 
@@ -92,6 +200,12 @@ public class Main
                         funnyDrone.setCurrentLocation(city.locations.get(i));
                         city.locations.get(i).getDrones().add(funnyDrone);
                         break;
+
+                    case "messenger":
+                        MessengerDrone messengerDrone = new MessengerDrone();
+                        messengerDrone.setCurrentLocation((city.locations.get(i)));
+                        city.locations.get(i).getDrones().add(messengerDrone);
+                        break;
                 }
             }
 
@@ -104,12 +218,11 @@ public class Main
         int i = 0;
         Scanner scanner = new Scanner(System.in);
 
-        currentUser = new User();
 
         System.out.println("Please enter name: ");
-        currentUser.setName(bufferedReader.readLine());
+        String name = bufferedReader.readLine();
 
-        int index = checkUsers(currentUser.getName(), users);
+        int index = checkUsers(name, users);
 
         if(index == -1)
         {
@@ -121,8 +234,9 @@ public class Main
                 System.out.printf("%d. %s\n", i, location.name);
             }
 
-            currentUser.setLocation(numSelectiontoLocation(Integer.parseInt(bufferedReader.readLine()), city.locations));
+            Location location = numSelectiontoLocation(Integer.parseInt(bufferedReader.readLine()), city.locations);
 
+            currentUser = new User(name, location, 200000d);
             users.add(currentUser);
 
             writeUser(currentUser);
@@ -132,7 +246,6 @@ public class Main
         {
             currentUser = users.get(index);
             System.out.println("Welcome Back!");
-            System.out.println("You're currently at " + currentUser.getLocation().name);
             scanner.nextLine();
         }
 
@@ -143,8 +256,10 @@ public class Main
     {
         FileReader namefileReader = new FileReader("files/Users/Names.txt");
         FileReader locfileReader = new FileReader("files/Users/Locations.txt");
+        FileReader moneyfileReader = new FileReader("files/Users/Money.txt");
         BufferedReader nbufferedReader = new BufferedReader(namefileReader);
         BufferedReader lbufferedReader = new BufferedReader(locfileReader);
+        BufferedReader mbufferedReader = new BufferedReader(moneyfileReader);
 
         while(true)
         {
@@ -154,10 +269,9 @@ public class Main
             if(name == null)
                 break;
 
-            User user = new User();
+            Double money = Double.parseDouble(mbufferedReader.readLine());
 
-            user.setName(name);
-            user.setLocation(findLocation(location, city.locations));
+            User user = new User(name, findLocation(location, city.locations), money);
 
             users.add(user);
 
@@ -167,6 +281,8 @@ public class Main
         nbufferedReader.close();
         locfileReader.close();
         lbufferedReader.close();
+        moneyfileReader.close();
+        mbufferedReader.close();
 
     }
 }

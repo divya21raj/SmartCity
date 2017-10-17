@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Location
 {
     public String name;
-    ArrayList<Location> adjacentLocations;
-    ArrayList<Double> adjacentLocationDistance;
+    public ArrayList<Location> adjacentLocations;
+    public ArrayList<Double> adjacentLocationDistance;
 
     private ArrayList<Drone> drones;
 

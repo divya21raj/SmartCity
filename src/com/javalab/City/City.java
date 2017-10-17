@@ -11,10 +11,12 @@ public class City
     String name;
 
     public ArrayList<Location> locations;
+    public Double cabRate;
 
-    public City(String name) throws IOException
+    public City(String name, Double cabRate) throws IOException
     {
         this.name = name;
+        this.cabRate = cabRate;
 
         locations = new ArrayList<>();
 

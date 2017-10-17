@@ -1,5 +1,13 @@
 package com.javalab.Drones;
 
-public class MessengerDrone
+import com.javalab.Drone;
+
+public class MessengerDrone extends Drone
 {
+
+    @Override
+    protected void contactCop()
+    {
+
+    }
 }
