@@ -53,7 +53,6 @@ public class Main
         clrscr();
 
 
-
     }
 
     private static void dronesInit() throws IOException

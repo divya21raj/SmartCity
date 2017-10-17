@@ -11,11 +11,9 @@ public abstract class Drone
 
     private Location currentLocation;
 
-    Storage storage;
-
     protected Drone()
     {
-        storage = new Storage();
+        currentLocation = null;
 
         id = randomID();
     }
