@@ -138,6 +138,7 @@ class UtilityMethods
         BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
         String droneName = null;
         String droneLine = null;
+        dronebufferedWriter.flush();
 
         for (Location location: locations)
         {
@@ -155,13 +156,17 @@ class UtilityMethods
                 else if(drone instanceof MessengerDrone)
                     droneName = "messenger";
 
-                droneLine = droneName + ", ";
+                if(droneLine!= null)
+                    droneLine += droneName + ", ";
+                else if (droneLine == null)
+                    droneLine = droneName + ", ";
             }
 
-            droneLine = droneLine.replaceAll(", $", ""); //removes trailing comma
+            droneLine = droneLine.substring(0, droneLine.lastIndexOf(",")); //removes trailing comma
 
             dronebufferedWriter.write(droneLine);
             dronebufferedWriter.newLine();
+            droneLine = null;
         }
 
         dronebufferedWriter.close();
