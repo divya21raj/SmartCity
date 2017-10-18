@@ -6,9 +6,8 @@ import com.javalab.Drones.FunnyDrone;
 import com.javalab.Drones.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,6 +19,20 @@ class UtilityMethods
     {
         for(int i = 0; i<70; i++)     //works as clrscr()
             System.out.println();
+    }
+
+    static void setupSaving() throws IOException
+    {
+        File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
+        File locfile = new File(System.getProperty("user.home") + "/SmartCity/Locations.txt");
+        File moneyfile = new File(System.getProperty("user.home") + "/SmartCity/Money.txt");
+        if(!namefile.exists())
+        {
+            namefile.getParentFile().mkdirs();
+            namefile.createNewFile();
+            locfile.createNewFile();
+            moneyfile.createNewFile();
+        }
     }
 
     static Location numSelectiontoLocation(int num, ArrayList<Location> locations)
@@ -66,13 +79,19 @@ class UtilityMethods
 
     static void writeUser(User user) throws IOException
     {
-        FileWriter namefileWriter = new FileWriter("files/Users/Names.txt", true);
-        FileWriter locfileWriter = new FileWriter("files/Users/Locations.txt", true);
-        FileWriter moneyfileWriter = new FileWriter("files/Users/Money.txt", true);
+        File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
+        namefile.getParentFile().mkdirs();
 
-        BufferedWriter nbufferedWriter = new BufferedWriter(namefileWriter);
-        BufferedWriter lbufferedWriter = new BufferedWriter(locfileWriter);
-        BufferedWriter mbufferedWriter = new BufferedWriter(moneyfileWriter);
+        File locfile = new File(System.getProperty("user.home") + "/SmartCity/Locations.txt");
+        locfile.getParentFile().mkdirs();
+
+        File moneyfile = new File(System.getProperty("user.home") + "/SmartCity/Money.txt");
+        moneyfile.getParentFile().mkdirs();
+
+        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter(namefile));
+        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter(locfile));
+        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter(moneyfile));
+
 
         nbufferedWriter.write(user.getName());
         nbufferedWriter.newLine();
@@ -84,16 +103,22 @@ class UtilityMethods
         nbufferedWriter.close();
         lbufferedWriter.close();
         mbufferedWriter.close();
-        namefileWriter.close();
-        locfileWriter.close();
-        moneyfileWriter.close();
     }
 
     static void saveProgress(ArrayList<User> users, ArrayList<Location> locations) throws IOException
     {
-        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter("files/Users/Names.txt"));
-        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter("files/Users/Locations.txt"));
-        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter("files/Users/Money.txt"));
+        File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
+        namefile.getParentFile().mkdirs();
+
+        File locfile = new File(System.getProperty("user.home") + "/SmartCity/Locations.txt");
+        locfile.getParentFile().mkdirs();
+
+        File moneyfile = new File(System.getProperty("user.home") + "/SmartCity/Money.txt");
+        moneyfile.getParentFile().mkdirs();
+
+        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter(namefile));
+        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter(locfile));
+        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter(moneyfile));
 
         nbufferedWriter.flush();
         lbufferedWriter.flush();
@@ -113,7 +138,7 @@ class UtilityMethods
         lbufferedWriter.close();
         mbufferedWriter.close();
 
-        BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter("files/City/drones_at_Locations"));
+        BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
         String droneName = null;
         String droneLine = null;
 

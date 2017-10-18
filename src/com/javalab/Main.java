@@ -8,6 +8,8 @@ import com.javalab.Drones.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -60,8 +62,7 @@ public class Main
         do
         {
             System.out.println("You are at " + currentUser.getLocation().name + ".");
-            System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " drones.");
-            System.out.println("We have some pretty knowledgeable drones flying around, try talking to them...");
+            System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " knowledgeable drones flying around, try talking to them...");
 
             System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Go some place else\n3.Log out\n");
 
@@ -165,7 +166,10 @@ public class Main
 
     private static void dronesInit() throws IOException
     {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("files/City/drones_at_Locations.txt"));
+        Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
+
         int i=0;
 
         while (true)
@@ -254,12 +258,11 @@ public class Main
 
     private static void initUsers() throws IOException
     {
-        FileReader namefileReader = new FileReader("files/Users/Names.txt");
-        FileReader locfileReader = new FileReader("files/Users/Locations.txt");
-        FileReader moneyfileReader = new FileReader("files/Users/Money.txt");
-        BufferedReader nbufferedReader = new BufferedReader(namefileReader);
-        BufferedReader lbufferedReader = new BufferedReader(locfileReader);
-        BufferedReader mbufferedReader = new BufferedReader(moneyfileReader);
+        setupSaving();
+
+        BufferedReader nbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Names.txt"));
+        BufferedReader lbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Locations.txt"));
+        BufferedReader mbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Money.txt"));
 
         while(true)
         {
@@ -277,12 +280,10 @@ public class Main
 
         }
 
-        namefileReader.close();
         nbufferedReader.close();
-        locfileReader.close();
         lbufferedReader.close();
-        moneyfileReader.close();
         mbufferedReader.close();
 
     }
+
 }
