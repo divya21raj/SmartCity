@@ -23,6 +23,8 @@ public abstract class Drone
         System.out.println("Photo was taken!");
     }
 
+    protected abstract void interact();
+
     protected abstract void contactCop();
 
 /////////////////////////////////GETTERS AND SETTERS////////////////////////////////////////////////////

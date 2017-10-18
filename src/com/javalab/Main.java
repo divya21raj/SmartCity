@@ -88,9 +88,30 @@ public class Main
 
     }
 
-    private static void droneInteraction()
+    private static void droneInteraction() throws IOException
     {
+        int cho, i = 1;
+        String droneName;
 
+        do
+        {
+            System.out.println("What drone do you want to talk to?: ");
+            for (Drone drone: currentUser.getLocation().getDrones())
+            {
+                droneName = droneType(drone);
+                System.out.printf("%d. %s drone\n", i++, droneName);
+            }
+            System.out.printf("%d. To previous menu", i);
+
+            cho = Integer.parseInt(bufferedReader.readLine());
+
+            if(cho != i)
+            {
+                currentUser.getLocation().getDrones().get(i-1).interact();
+                cho = i;
+            }
+
+        }while(cho != i);
     }
 
     private static void changeLocation() throws IOException
@@ -164,60 +185,6 @@ public class Main
 
     }
 
-    private static void dronesInit() throws IOException
-    {
-        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").exists()))
-            Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
-
-        int i=0;
-
-        while (true)
-        {
-            String droneLine = bufferedReader.readLine();
-
-            if(droneLine == null)
-                break;
-
-            StringTokenizer stringTokenizer = new StringTokenizer(droneLine, ",");
-
-            while(stringTokenizer.hasMoreTokens())
-            {
-                String drone = stringTokenizer.nextToken().trim();
-
-                switch (drone)
-                {
-                    case "cop":
-                        CopDrone copDrone = new CopDrone();
-                        copDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(copDrone);
-                        break;
-
-                    case "tour":
-                        TourGuideDrone tourGuideDrone = new TourGuideDrone();
-                        tourGuideDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(tourGuideDrone);
-                        break;
-
-                    case "funny":
-                        FunnyDrone funnyDrone = new FunnyDrone();
-                        funnyDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(funnyDrone);
-                        break;
-
-                    case "messenger":
-                        MessengerDrone messengerDrone = new MessengerDrone();
-                        messengerDrone.setCurrentLocation((city.locations.get(i)));
-                        city.locations.get(i).getDrones().add(messengerDrone);
-                        break;
-                }
-            }
-
-            i++;
-        }
-    }
-
     private static void userInit() throws IOException
     {
         int i = 0;
@@ -255,6 +222,60 @@ public class Main
         }
 
 
+    }
+
+    private static void dronesInit() throws IOException
+    {
+        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").exists()))
+            Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
+
+        int i=0;
+
+        while (true)
+        {
+            String droneLine = bufferedReader.readLine();
+
+            if(droneLine == null)
+                break;
+
+            StringTokenizer stringTokenizer = new StringTokenizer(droneLine, ",");
+
+            while(stringTokenizer.hasMoreTokens())
+            {
+                String drone = stringTokenizer.nextToken().trim();
+
+                switch (drone)
+                {
+                    case "Cop":
+                        CopDrone copDrone = new CopDrone();
+                        copDrone.setCurrentLocation(city.locations.get(i));
+                        city.locations.get(i).getDrones().add(copDrone);
+                        break;
+
+                    case "TourGuide":
+                        TourGuideDrone tourGuideDrone = new TourGuideDrone();
+                        tourGuideDrone.setCurrentLocation(city.locations.get(i));
+                        city.locations.get(i).getDrones().add(tourGuideDrone);
+                        break;
+
+                    case "Funny":
+                        FunnyDrone funnyDrone = new FunnyDrone();
+                        funnyDrone.setCurrentLocation(city.locations.get(i));
+                        city.locations.get(i).getDrones().add(funnyDrone);
+                        break;
+
+                    case "Messenger":
+                        MessengerDrone messengerDrone = new MessengerDrone();
+                        messengerDrone.setCurrentLocation((city.locations.get(i)));
+                        city.locations.get(i).getDrones().add(messengerDrone);
+                        break;
+                }
+            }
+
+            i++;
+        }
     }
 
     private static void initUsers() throws IOException

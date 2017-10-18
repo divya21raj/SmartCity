@@ -6,6 +6,12 @@ public class FunnyDrone extends Drone
 {
 
     @Override
+    protected void interact()
+    {
+
+    }
+
+    @Override
     protected void contactCop()
     {}
 }

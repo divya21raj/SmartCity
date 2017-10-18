@@ -6,6 +6,12 @@ public class MessengerDrone extends Drone
 {
 
     @Override
+    public void interact()
+    {
+
+    }
+
+    @Override
     protected void contactCop()
     {
 

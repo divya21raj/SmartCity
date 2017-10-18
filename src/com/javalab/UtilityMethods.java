@@ -136,7 +136,7 @@ class UtilityMethods
         mbufferedWriter.close();
 
         BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
-        String droneName = null;
+        String droneName;
         String droneLine = null;
         dronebufferedWriter.flush();
 
@@ -144,17 +144,7 @@ class UtilityMethods
         {
             for (Drone drone: location.getDrones())
             {
-                if(drone instanceof CopDrone)
-                    droneName = "cop";
-
-                else if(drone instanceof FunnyDrone)
-                    droneName = "funny";
-
-                else if(drone instanceof TourGuideDrone)
-                    droneName = "tour";
-
-                else if(drone instanceof MessengerDrone)
-                    droneName = "messenger";
+                droneName = droneType(drone);
 
                 if(droneLine!= null)
                     droneLine += droneName + ", ";
@@ -209,5 +199,23 @@ class UtilityMethods
         return id;
     }
 
+    static String droneType(Drone drone)
+    {
+        String droneName = null;
+
+        if(drone instanceof CopDrone)
+            droneName = "Cop";
+
+        else if(drone instanceof FunnyDrone)
+            droneName = "Funny";
+
+        else if(drone instanceof TourGuideDrone)
+            droneName = "TourGuide";
+
+        else if(drone instanceof MessengerDrone)
+            droneName = "Messenger";
+
+        return droneName;
+    }
 
 }
