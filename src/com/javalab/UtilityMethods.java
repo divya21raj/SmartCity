@@ -79,18 +79,15 @@ class UtilityMethods
 
     static void writeUser(User user) throws IOException
     {
-        File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
-        namefile.getParentFile().mkdirs();
+        FileWriter namefile = new FileWriter(System.getProperty("user.home") + "/SmartCity/Names.txt", true);
 
-        File locfile = new File(System.getProperty("user.home") + "/SmartCity/Locations.txt");
-        locfile.getParentFile().mkdirs();
+        FileWriter locfile = new FileWriter(System.getProperty("user.home") + "/SmartCity/Locations.txt", true);
 
-        File moneyfile = new File(System.getProperty("user.home") + "/SmartCity/Money.txt");
-        moneyfile.getParentFile().mkdirs();
+        FileWriter moneyfile = new FileWriter(System.getProperty("user.home") + "/SmartCity/Money.txt", true);
 
-        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter(namefile));
-        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter(locfile));
-        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter(moneyfile));
+        BufferedWriter nbufferedWriter = new BufferedWriter(namefile);
+        BufferedWriter lbufferedWriter = new BufferedWriter(locfile);
+        BufferedWriter mbufferedWriter = new BufferedWriter(moneyfile);
 
 
         nbufferedWriter.write(user.getName());

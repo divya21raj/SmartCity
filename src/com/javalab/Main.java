@@ -166,7 +166,8 @@ public class Main
 
     private static void dronesInit() throws IOException
     {
-        Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").exists()))
+            Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
 
