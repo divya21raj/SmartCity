@@ -14,9 +14,9 @@ import static com.javalab.UtilityMethods.saveMessages;
 
 public class MessengerDrone extends Drone
 {
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    ArrayList<Message> messages;
+    private ArrayList<Message> messages;
 
     @Override
     public void interact() throws IOException
@@ -81,9 +81,7 @@ public class MessengerDrone extends Drone
 
             objectInputStream.close();
         }catch (EOFException e)
-        {
-            System.out.println("EOF");
-        }
+        {}
     }
 
     public MessengerDrone(ArrayList<User> users) throws IOException, ClassNotFoundException

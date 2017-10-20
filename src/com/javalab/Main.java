@@ -142,12 +142,12 @@ public class Main
                         Message temp = messages.get(index);
 
                         System.out.println("From : " + temp.getSender().getName());
-                        System.out.printf("%s", '"');
+                        System.out.printf("%s\n", "----");
                         for (String line: temp.getText())
                         {
                             if(line.equals("End"))
                             {
-                                System.out.printf("%s\n", '"');
+                                System.out.printf("%s\n", "----");
                                 break;
                             }
                             else
