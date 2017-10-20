@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class UtilityMethods
+public class UtilityMethods
 {
     static int j = 0;
 
@@ -26,12 +26,25 @@ class UtilityMethods
         File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
         File locfile = new File(System.getProperty("user.home") + "/SmartCity/Locations.txt");
         File moneyfile = new File(System.getProperty("user.home") + "/SmartCity/Money.txt");
+        File messagefile = new File(System.getProperty("user.home") + "/SmartCity/messages");
         if(!namefile.exists())
         {
             namefile.getParentFile().mkdirs();
             namefile.createNewFile();
             locfile.createNewFile();
             moneyfile.createNewFile();
+
+            messagefile.getParentFile().mkdirs();
+            messagefile.createNewFile();
+        }
+    }
+
+    static void loadAllMessengerDroneMessages(Location location) throws IOException, ClassNotFoundException
+    {
+        for(Drone drone: location.getDrones())
+        {
+            if(drone instanceof MessengerDrone)
+                ((MessengerDrone) drone).loadMessages();
         }
     }
 
@@ -45,7 +58,23 @@ class UtilityMethods
         return location;
     }
 
-    static int checkUsers(String userName, ArrayList<User> users) throws IOException
+    public static boolean isMessagesEmpty(ArrayList<String>[][] messages, User user, ArrayList<User> users) throws IOException
+    {
+        boolean flag = true;
+        int recIndex = checkUsers(user.getName(), users);
+
+        for (int j=0; j<messages[recIndex].length; j++)
+        {
+            if(!messages[recIndex][j].isEmpty())
+            {
+                flag = false;
+                break;
+            }
+        }
+
+        return flag;
+    }
+    public static int checkUsers(String userName, ArrayList<User> users) throws IOException
     {
         int index = -1;
 
@@ -104,6 +133,7 @@ class UtilityMethods
 
     static void saveProgress(ArrayList<User> users, ArrayList<Location> locations) throws IOException
     {
+        ////////////////////////////////Users' names, money, locations///////////////////////////////////////////////////////
         File namefile = new File(System.getProperty("user.home") + "/SmartCity/Names.txt");
         namefile.getParentFile().mkdirs();
 
@@ -135,6 +165,8 @@ class UtilityMethods
         lbufferedWriter.close();
         mbufferedWriter.close();
 
+        /////////////////////////////Drone Positions/////////////////////////////////////////
+
         BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
         String droneName;
         String droneLine = null;
@@ -162,6 +194,8 @@ class UtilityMethods
         dronebufferedWriter.close();
 
     }
+
+
 
     static Double costCalc(ArrayList<Location> locations, Location start, Location end, Double rate)
     {

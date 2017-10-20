@@ -3,6 +3,9 @@ package com.javalab;
 import com.javalab.City.Location;
 import com.javalab.Storage.Storage;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import static com.javalab.UtilityMethods.randomID;
 
 public abstract class Drone
@@ -23,7 +26,7 @@ public abstract class Drone
         System.out.println("Photo was taken!");
     }
 
-    protected abstract void interact();
+    protected abstract void interact() throws IOException;
 
     protected abstract void contactCop();
 

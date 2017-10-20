@@ -26,7 +26,7 @@ public class Main
 
     private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, ClassNotFoundException
     {
         int cho;
 
@@ -35,7 +35,6 @@ public class Main
         initUsers();
 
         dronesInit();
-
 
         do
         {
@@ -54,15 +53,18 @@ public class Main
         }while(cho == 1);
     }
 
-    private static void mainScreen() throws IOException
+    private static void mainScreen() throws IOException, ClassNotFoundException
     {
         clrscr();
 
         int cho;
         do
         {
+            displayMessages();
+
             System.out.println("You are at " + currentUser.getLocation().name + ".");
             System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " knowledgeable drones flying around, try talking to them...");
+
 
             System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Go some place else\n3.Log out\n");
 
@@ -101,20 +103,67 @@ public class Main
                 droneName = droneType(drone);
                 System.out.printf("%d. %s drone\n", i++, droneName);
             }
-            System.out.printf("%d. To previous menu", i);
+            System.out.printf("%d. To previous menu\n", i);
 
             cho = Integer.parseInt(bufferedReader.readLine());
 
             if(cho != i)
             {
-                currentUser.getLocation().getDrones().get(i-1).interact();
+                currentUser.getLocation().getDrones().get(cho-1).interact();
                 cho = i;
             }
 
         }while(cho != i);
     }
 
-    private static void changeLocation() throws IOException
+    private static void displayMessages() throws IOException, ClassNotFoundException
+    {
+        ArrayList<String>[][] messages;
+
+        loadAllMessengerDroneMessages(currentUser.getLocation());
+
+        for(Drone drone: currentUser.getLocation().getDrones())
+        {
+            if(drone instanceof MessengerDrone)
+            {
+                messages = ((MessengerDrone) drone).getMessages();
+
+                if(isMessagesEmpty(messages, currentUser, users) == true)
+                break;
+
+                else
+                {
+                    System.out.println("You have the following messages...");
+
+                    for (int i = 0; i < messages.length; i++)
+                    {
+                        for (int j = 0; j < messages[i].length; j++)
+                        {
+                            if (!messages[i][j].isEmpty())
+                            {
+                                System.out.println("From : " + users.get(j).getName());
+                                System.out.printf("%s", '"');
+
+                                for (String line : messages[i][j])
+                                {
+                                    if (line.equals("End"))
+                                    {
+                                        System.out.printf("%s\n", '"');
+                                        break;
+                                    }
+                                    else
+                                        System.out.printf("%s\n", line);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private static void changeLocation() throws IOException, ClassNotFoundException
     {
         int i, cho, chom;
 
@@ -224,7 +273,7 @@ public class Main
 
     }
 
-    private static void dronesInit() throws IOException
+    private static void dronesInit() throws IOException, ClassNotFoundException
     {
         if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").exists()))
             Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -267,7 +316,7 @@ public class Main
                         break;
 
                     case "Messenger":
-                        MessengerDrone messengerDrone = new MessengerDrone();
+                        MessengerDrone messengerDrone = new MessengerDrone(users);
                         messengerDrone.setCurrentLocation((city.locations.get(i)));
                         city.locations.get(i).getDrones().add(messengerDrone);
                         break;
@@ -308,4 +357,13 @@ public class Main
 
     }
 
+    public static ArrayList<User> getUsers()
+    {
+        return users;
+    }
+
+    public static User getCurrentUser()
+    {
+        return currentUser;
+    }
 }
