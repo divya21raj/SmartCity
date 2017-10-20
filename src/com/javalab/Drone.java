@@ -1,14 +1,13 @@
 package com.javalab;
 
 import com.javalab.City.Location;
-import com.javalab.Storage.Storage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.Serializable;
 
 import static com.javalab.UtilityMethods.randomID;
 
-public abstract class Drone
+public abstract class Drone implements Serializable
 {
     private String id;
 

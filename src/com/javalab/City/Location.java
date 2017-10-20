@@ -3,6 +3,7 @@ package com.javalab.City;
 import com.javalab.Drone;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Location

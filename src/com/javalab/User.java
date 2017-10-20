@@ -2,11 +2,15 @@ package com.javalab;
 
 import com.javalab.City.Location;
 
-public class User
+import java.io.Serializable;
+
+public class User implements Serializable
 {
     private String name;
-    private Location location;
+    private transient Location location; //location was not serializable
     private Double money;
+
+    private static final long serialVersionUID = 0; //to prevent Class mismatch error
 
     User(String name, Location location, Double money)
     {

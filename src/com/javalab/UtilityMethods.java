@@ -3,11 +3,11 @@ package com.javalab;
 import com.javalab.City.Location;
 import com.javalab.Drones.CopDrone;
 import com.javalab.Drones.FunnyDrone;
-import com.javalab.Drones.MessengerDrone;
+import com.javalab.Drones.Messenger.Message;
+import com.javalab.Drones.Messenger.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -48,6 +48,34 @@ public class UtilityMethods
         }
     }
 
+    public static ArrayList<Integer> checkUserInMessages(String name, ArrayList<Message> messages, ArrayList<User> users) throws IOException
+    {
+        ArrayList<Integer> indices = new ArrayList<>();
+
+        for (Message message: messages)
+        {
+            String recName = message.getReceiver().getName();
+
+            if(recName.equals(name) && message.getRead() == false)
+            {
+                int index = messages.indexOf(message);
+                indices.add(index);
+            }
+        }
+
+        return indices;
+    }
+
+    static public void saveMessages(ArrayList<Message> messages) throws IOException
+    {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home") + "/SmartCity/messages"));
+
+        objectOutputStream.writeObject(messages);
+
+        objectOutputStream.close();
+    }
+
+
     static Location numSelectiontoLocation(int num, ArrayList<Location> locations)
     {
         Location location = null;
@@ -58,22 +86,6 @@ public class UtilityMethods
         return location;
     }
 
-    public static boolean isMessagesEmpty(ArrayList<String>[][] messages, User user, ArrayList<User> users) throws IOException
-    {
-        boolean flag = true;
-        int recIndex = checkUsers(user.getName(), users);
-
-        for (int j=0; j<messages[recIndex].length; j++)
-        {
-            if(!messages[recIndex][j].isEmpty())
-            {
-                flag = false;
-                break;
-            }
-        }
-
-        return flag;
-    }
     public static int checkUsers(String userName, ArrayList<User> users) throws IOException
     {
         int index = -1;

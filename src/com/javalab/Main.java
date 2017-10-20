@@ -4,7 +4,8 @@ import com.javalab.City.City;
 import com.javalab.City.Location;
 import com.javalab.Drones.CopDrone;
 import com.javalab.Drones.FunnyDrone;
-import com.javalab.Drones.MessengerDrone;
+import com.javalab.Drones.Messenger.Message;
+import com.javalab.Drones.Messenger.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
 
 import java.io.*;
@@ -62,6 +63,7 @@ public class Main
         {
             displayMessages();
 
+            System.out.println("");
             System.out.println("You are at " + currentUser.getLocation().name + ".");
             System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " knowledgeable drones flying around, try talking to them...");
 
@@ -118,7 +120,8 @@ public class Main
 
     private static void displayMessages() throws IOException, ClassNotFoundException
     {
-        ArrayList<String>[][] messages;
+        ArrayList<Message> messages = null;
+        Scanner scanner = new Scanner(System.in);
 
         loadAllMessengerDroneMessages(currentUser.getLocation());
 
@@ -128,39 +131,37 @@ public class Main
             {
                 messages = ((MessengerDrone) drone).getMessages();
 
-                if(isMessagesEmpty(messages, currentUser, users) == true)
-                break;
+                ArrayList<Integer> messageIndices = checkUserInMessages(currentUser.getName(), messages, users);
 
-                else
+                if(!messageIndices.isEmpty())
                 {
                     System.out.println("You have the following messages...");
 
-                    for (int i = 0; i < messages.length; i++)
+                    for(int index: messageIndices)
                     {
-                        for (int j = 0; j < messages[i].length; j++)
-                        {
-                            if (!messages[i][j].isEmpty())
-                            {
-                                System.out.println("From : " + users.get(j).getName());
-                                System.out.printf("%s", '"');
+                        Message temp = messages.get(index);
 
-                                for (String line : messages[i][j])
-                                {
-                                    if (line.equals("End"))
-                                    {
-                                        System.out.printf("%s\n", '"');
-                                        break;
-                                    }
-                                    else
-                                        System.out.printf("%s\n", line);
-                                }
+                        System.out.println("From : " + temp.getSender().getName());
+                        System.out.printf("%s", '"');
+                        for (String line: temp.getText())
+                        {
+                            if(line.equals("End"))
+                            {
+                                System.out.printf("%s\n", '"');
+                                break;
                             }
+                            else
+                                System.out.println(line);
                         }
+
+                        messages.get(index).setRead(true);
+                        scanner.nextLine();
                     }
                 }
             }
         }
-
+        
+        saveMessages(messages);
     }
 
     private static void changeLocation() throws IOException, ClassNotFoundException

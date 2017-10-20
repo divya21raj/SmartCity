@@ -1,21 +1,22 @@
-package com.javalab.Drones;
+package com.javalab.Drones.Messenger;
 
 import com.javalab.Drone;
 import com.javalab.User;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 
 import static com.javalab.Main.getCurrentUser;
 import static com.javalab.Main.getUsers;
 import static com.javalab.UtilityMethods.checkUsers;
+import static com.javalab.UtilityMethods.saveMessages;
+
 
 public class MessengerDrone extends Drone
 {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    ArrayList<String>[][] messages;   //horizontal - sender, vertical - receiver
+    ArrayList<Message> messages;
 
     @Override
     public void interact() throws IOException
@@ -44,66 +45,50 @@ public class MessengerDrone extends Drone
         System.out.println("Enter the name of the person you want to send this message to: ");
         String name = bufferedReader.readLine();
 
-        int recIndex = checkUsers(name, users);
+        int userIndex = checkUsers(name, users);
 
-        if(recIndex != -1)
+        if(userIndex != -1)
         {
-            int sendIndex = checkUsers(currentUser.getName(), users);
-            ArrayList<String> message = new ArrayList<>();
+            ArrayList<String> text = new ArrayList<>();
 
             System.out.printf("Enter your message...enter 'End'(without quotes) as a separate line to finish...\n");
 
-            while(!(message.contains("End")))
-                message.add(bufferedReader.readLine());
+            while(!(text.contains("End")))
+            {
+                text.add(bufferedReader.readLine());
+            }
 
-            messages[recIndex][sendIndex] = message;
+            messages.add(new Message(currentUser, users.get(userIndex), text));
 
             System.out.println("Message sent successfully!");
 
-            saveMessages();
-
+            saveMessages(messages);
         }
 
         else
+        {
             System.out.println("Sorry, that user doesn't exist...");
-    }
-
-    public void saveMessages() throws IOException
-    {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home") + "/SmartCity/messages"));
-
-        objectOutputStream.writeObject(this.messages);
-
-        objectOutputStream.close();
+        }
     }
 
     public void loadMessages() throws IOException, ClassNotFoundException
     {
-        FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.home") + "/SmartCity/messages");
         try
         {
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(System.getProperty("user.home") + "/SmartCity/messages"));
 
-            if(objectInputStream.readObject() != null)
-                this.messages = (ArrayList<String>[][]) objectInputStream.readObject();
+            messages = (ArrayList<Message>) objectInputStream.readObject();
 
             objectInputStream.close();
-        } catch (EOFException e)
+        }catch (EOFException e)
         {
             System.out.println("EOF");
         }
-
     }
 
     public MessengerDrone(ArrayList<User> users) throws IOException, ClassNotFoundException
     {
-        messages = new ArrayList[users.size() + 3][users.size() + 3];
-
-        for (int i =0; i< messages.length; i++)
-        {
-            for (int j=0; j<messages[i].length; j++)
-                messages[i][j] = new ArrayList<>();
-        }
+        messages = new ArrayList<>();
 
         loadMessages();
     }
@@ -116,14 +101,16 @@ public class MessengerDrone extends Drone
 
     //////////////////////Getters and setters///////////////////////////////
 
-    public void setMessages(ArrayList<String>[][] messages)
-    {
-        this.messages = messages;
-    }
 
-
-    public ArrayList<String>[][] getMessages()
+    public ArrayList<Message> getMessages()
     {
         return messages;
     }
+
+    public void setMessages(ArrayList<Message> messages)
+    {
+        this.messages = messages;
+    }
 }
+
+
