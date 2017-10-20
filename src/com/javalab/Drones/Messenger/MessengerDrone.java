@@ -75,7 +75,7 @@ public class MessengerDrone extends Drone
     {
         try
         {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(System.getProperty("user.home") + "/SmartCity/messages"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(System.getProperty("user.home") + "\\SmartCity\\messages"));
 
             messages = (ArrayList<Message>) objectInputStream.readObject();
 
