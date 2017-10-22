@@ -214,6 +214,8 @@ public class Main
                             {
                                 currentUser.setLocation(newLocation);
                                 mainScreen();
+                                chom = 3;
+                                cho = i;
                                 //do some health thingy here
                             }
                         }
@@ -226,6 +228,14 @@ public class Main
                             chom = 3;
                             cho = i;
                         }
+                    }
+
+                    else if(chom == 2)
+                    {
+                        currentUser.setLocation(newLocation);
+                        mainScreen();
+                        chom = 3;
+                        cho = i;
                     }
 
                 }while (chom != 3);
@@ -357,6 +367,8 @@ public class Main
         mbufferedReader.close();
 
     }
+
+/////////////////////////////Getters and Setters////////////////////////////////////////////////
 
     public static ArrayList<User> getUsers()
     {
