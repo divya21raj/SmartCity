@@ -155,6 +155,7 @@ public class Main
                         }
 
                         messages.get(index).setRead(true);
+                        System.out.println("Press enter to continue");
                         scanner.nextLine();
                     }
                 }
@@ -194,6 +195,7 @@ public class Main
                         Double travelCost = costCalc(city.locations, currentUser.getLocation(), newLocation, city.cabRate);
 
                         System.out.println("That'll be " + travelCost + " Rs.");
+                        System.out.println("Press enter to continue...");
                         scanner.nextLine();
 
                         if(currentUser.getMoney() < travelCost)
@@ -277,7 +279,8 @@ public class Main
         else
         {
             currentUser = users.get(index);
-            System.out.println("Welcome Back!");
+            System.out.println("Welcome Back!(press enter to continue...)");
+            System.out.println("Press enter to continue...");
             scanner.nextLine();
         }
 

@@ -28,12 +28,14 @@ public class FunnyDrone extends Drone
         int jokeIndex = random.nextInt(jokes.size());
 
         System.out.println("Here's a rather funny joke...");
+        System.out.println("Press enter to see it...");
         scanner.nextLine();
 
         for (String line: jokes.get(jokeIndex))
             System.out.println(line);
 
-        System.out.printf("\n:);):);):);):);):);):);)See ya!");
+        System.out.printf("\n:);):);):);):);):);):);)See ya!\n");
+        System.out.println("Press enter to continue");
         scanner.nextLine();
     }
 
