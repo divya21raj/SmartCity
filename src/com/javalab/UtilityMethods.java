@@ -1,11 +1,13 @@
 package com.javalab;
 
+import com.javalab.City.City;
 import com.javalab.City.Location;
 import com.javalab.Drones.CopDrone;
 import com.javalab.Drones.FunnyDrone;
 import com.javalab.Drones.Messenger.Message;
 import com.javalab.Drones.Messenger.MessengerDrone;
 import com.javalab.Drones.TourGuideDrone;
+import com.javalab.Misc.ShortestPath;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -263,9 +265,9 @@ public class UtilityMethods
 
     }
 
-    static Double costCalc(ArrayList<Location> locations, Location start, Location end, Double rate)
+    static Double costCalc(City city, ArrayList<Location> locations, Location start, Location end, Double rate)
     {
-        Double cost;
+        Double cost = null;
 
         int endIndex = 0;
 
@@ -278,7 +280,10 @@ public class UtilityMethods
             }
         }
 
-        cost = rate * start.adjacentLocationDistance.get(endIndex);
+        ShortestPath shortestPath = new ShortestPath();
+        Double[] dist = shortestPath.dijkstra(city.locationDistanceGraph, city.locations.indexOf(start));
+
+        cost = Math.ceil(dist[endIndex]*city.cabRate);
 
         return cost;
     }

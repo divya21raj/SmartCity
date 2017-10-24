@@ -191,7 +191,7 @@ public class Main
 
                     if(chom == 1)
                     {
-                        Double travelCost = costCalc(city.locations, currentUser.getLocation(), newLocation, city.cabRate);
+                        Double travelCost = costCalc(city, city.locations, currentUser.getLocation(), newLocation, city.cabRate);
 
                         System.out.println("That'll be " + travelCost + " Rs.");
                         System.out.println("Press enter to continue...");
@@ -278,7 +278,7 @@ public class Main
         else
         {
             currentUser = users.get(index);
-            System.out.println("Welcome Back!(press enter to continue...)");
+            System.out.println("Welcome Back!");
             System.out.println("Press enter to continue...");
             scanner.nextLine();
         }
@@ -372,5 +372,10 @@ public class Main
     public static User getCurrentUser()
     {
         return currentUser;
+    }
+
+    public static City getCity()
+    {
+        return city;
     }
 }

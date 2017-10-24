@@ -13,6 +13,8 @@ public class City
     public ArrayList<Location> locations;
     public Double cabRate;
 
+    public Double[][] locationDistanceGraph;
+
     public City(String name, Double cabRate) throws IOException
     {
         this.name = name;
@@ -39,17 +41,44 @@ public class City
         fileReader = new FileReader("files/City/distance_between_Locations.txt");
         bufferedReader = new BufferedReader(fileReader);
 
+        int i = 0, j;
+        locationDistanceGraph = new Double[locations.size()][locations.size()];
+
         for(Location location : locations)
         {
             String distanceLine = bufferedReader.readLine();
 
             StringTokenizer tokenizer = new StringTokenizer(distanceLine, ",");
 
+            j = 0;
             while(tokenizer.hasMoreTokens())
-                location.adjacentLocationDistance.add(Double.parseDouble(tokenizer.nextToken().trim()));
+            {
+                Double distance = Double.parseDouble(tokenizer.nextToken().trim());
+
+                location.adjacentLocationDistance.add(distance);
+                this.locationDistanceGraph[i][j++] = distance;
+            }
+
+            i++;
         }
 
     }
 
+    /////////////////////////////////////GETTERS & SETTERS//////////////////////////////////
 
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public ArrayList<Location> getLocations()
+    {
+        return locations;
+    }
+
+    public Double getCabRate()
+    {
+        return cabRate;
+    }
 }
