@@ -110,14 +110,17 @@ public class UtilityMethods
     {
         ArrayList<Integer> indices = new ArrayList<>();
 
-        for (Message message: messages)
+        if(messages != null)
         {
-            String recName = message.getReceiver().getName();
-
-            if(recName.equals(name) && !message.getRead())
+            for (Message message: messages)
             {
-                int index = messages.indexOf(message);
-                indices.add(index);
+                String recName = message.getReceiver().getName();
+
+                if(recName.equals(name) && !message.getRead())
+                {
+                    int index = messages.indexOf(message);
+                    indices.add(index);
+                }
             }
         }
 
@@ -237,31 +240,7 @@ public class UtilityMethods
 
         //////////////////\\//////////Drone Positions/////////////////////////////////////////
 
-        BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+fileSeperator + "SmartCity" + fileSeperator + "drones_not_at_Locations.txt"));
-        String droneName;
-        String droneLine = null;
-        dronebufferedWriter.flush();
 
-        for (Location location: locations)
-        {
-            for (Drone drone: location.getDrones())
-            {
-                droneName = droneType(drone);
-
-                if(droneLine!= null)
-                    droneLine += droneName + ", ";
-                else if (droneLine == null)
-                    droneLine = droneName + ", ";
-            }
-
-            droneLine = droneLine.substring(0, droneLine.lastIndexOf(",")); //removes trailing comma
-
-            dronebufferedWriter.write(droneLine);
-            dronebufferedWriter.newLine();
-            droneLine = null;
-        }
-
-        dronebufferedWriter.close();
 
     }
 
@@ -294,7 +273,7 @@ public class UtilityMethods
 
         if(numList.isEmpty())
         {
-            for(int i=0; i<1001; i++)
+            for(int i=0; i<200; i++)
                 numList.add(i);
 
             Collections.shuffle(numList);

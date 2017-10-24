@@ -27,6 +27,8 @@ public class Main
 
     private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
+    static String fileSeperator = File.separator;
+
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
         int cho;
@@ -296,7 +298,7 @@ public class Main
             tourGuideDrone.setCurrentLocation(city.locations.get(i));
             FunnyDrone funnyDrone = new FunnyDrone();
             funnyDrone.setCurrentLocation(city.locations.get(i));
-            MessengerDrone messengerDrone = new MessengerDrone(users);
+            MessengerDrone messengerDrone = new MessengerDrone();
             messengerDrone.setCurrentLocation((city.locations.get(i)));
             city.locations.get(i).getDrones().add(copDrone);
             city.locations.get(i).getDrones().add(tourGuideDrone);
@@ -305,10 +307,10 @@ public class Main
 
         }
 
-        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt").exists()))
-            Files.copy(new File("files/City/drones_not_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        if(!(new File(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt").exists()))
+            Files.copy(new File("files"+fileSeperator+"City"+fileSeperator+"drones_not_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt"));
 
         int j=0;
         while (true)
@@ -336,9 +338,9 @@ public class Main
     {
         setupSaving();
 
-        BufferedReader nbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Names.txt"));
-        BufferedReader lbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Locations.txt"));
-        BufferedReader mbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + "/SmartCity/Money.txt"));
+        BufferedReader nbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Names.txt"));
+        BufferedReader lbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Locations.txt"));
+        BufferedReader mbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Money.txt"));
 
         while(true)
         {

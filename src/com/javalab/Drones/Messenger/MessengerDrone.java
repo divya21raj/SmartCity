@@ -75,16 +75,21 @@ public class MessengerDrone extends Drone
     {
         try
         {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(System.getProperty("user.home") + File.separator + "SmartCity\\messages"));
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(System.getProperty("user.home") + File.separator + "SmartCity" + File.separator + "messages"));
 
-            messages = (ArrayList<Message>) objectInputStream.readObject();
+            ArrayList<Message> temp = (ArrayList<Message>) objectInputStream.readObject();
+
+            if(temp!=null)
+                messages = temp;
 
             objectInputStream.close();
         }catch (EOFException e)
-        {}
+        {
+            System.out.println("EOF");
+        }
     }
 
-    public MessengerDrone(ArrayList<User> users) throws IOException, ClassNotFoundException
+    public MessengerDrone() throws IOException, ClassNotFoundException
     {
         messages = new ArrayList<>();
 

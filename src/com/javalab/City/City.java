@@ -1,6 +1,7 @@
 package com.javalab.City;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class City
 
     public Double[][] locationDistanceGraph;
 
+    static String fileSeperator = File.separator;
+
     public City(String name, Double cabRate) throws IOException
     {
         this.name = name;
@@ -22,7 +25,7 @@ public class City
 
         locations = new ArrayList<>();
 
-        FileReader fileReader = new FileReader("files/City/list_of_Locations.txt");
+        FileReader fileReader = new FileReader("files"+fileSeperator+"City"+fileSeperator+"list_of_Locations.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         while(true)
@@ -35,10 +38,7 @@ public class City
             locations.add(new Location(location));
         }
 
-        for(Location ilocation : locations)
-            ilocation.adjacentLocations.addAll(locations);
-
-        fileReader = new FileReader("files/City/distance_between_Locations.txt");
+        fileReader = new FileReader("files"+fileSeperator+"City"+fileSeperator+"distance_between_Locations.txt");
         bufferedReader = new BufferedReader(fileReader);
 
         int i = 0, j;
