@@ -1,7 +1,0 @@
-Cop, Messenger, Funny, TourGuide
-Cop, Messenger, Funny, TourGuide
-Cop, Cop, Messenger, TourGuide
-Cop, Messenger, Funny, TourGuide
-Cop, Messenger, Funny, TourGuide
-Cop, Messenger, TourGuide
-Cop, Messenger, Funny, TourGuide 

@@ -10,18 +10,71 @@ import com.javalab.Drones.TourGuideDrone;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class UtilityMethods
 {
 
     static String fileSeperator = File.separator;
     
+    //For randomID
     private static int j = 0;
+    static ArrayList<Integer> numList = new ArrayList<>();
+    ///
 
     static void clrscr()
     {
         for(int i = 0; i<70; i++)     //works as clrscr()
             System.out.println();
+    }
+
+    static void removeDrone(String droneType, Location location) throws IOException, ClassNotFoundException
+    {
+        Iterator<Drone> iterator;
+
+        switch (droneType)
+        {
+            case "Cop":
+                iterator= location.getDrones().iterator();
+                while (iterator.hasNext())
+                {
+                    Drone drone = iterator.next();
+                    if(drone instanceof CopDrone)
+                        iterator.remove();
+                }
+                break;
+
+            case "Messenger":
+                iterator= location.getDrones().iterator();
+                while (iterator.hasNext())
+                {
+                    Drone drone = iterator.next();
+                    if(drone instanceof MessengerDrone)
+                        iterator.remove();
+                }
+                break;
+
+            case "Funny":
+                iterator= location.getDrones().iterator();
+                while (iterator.hasNext())
+                {
+                    Drone drone = iterator.next();
+                    if(drone instanceof FunnyDrone)
+                        iterator.remove();
+                }
+                break;
+
+            case "TourGuideDrone":
+                iterator= location.getDrones().iterator();
+                while (iterator.hasNext())
+                {
+                    Drone drone = iterator.next();
+                    if(drone instanceof TourGuideDrone)
+                        iterator.remove();
+                }
+                break;
+        }
+
     }
 
     static void setupSaving() throws IOException
@@ -182,7 +235,7 @@ public class UtilityMethods
 
         //////////////////\\//////////Drone Positions/////////////////////////////////////////
 
-        BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+fileSeperator + "SmartCity" + fileSeperator + "drones_at_Locations.txt"));
+        BufferedWriter dronebufferedWriter = new BufferedWriter(new FileWriter(System.getProperty("user.home")+fileSeperator + "SmartCity" + fileSeperator + "drones_not_at_Locations.txt"));
         String droneName;
         String droneLine = null;
         dronebufferedWriter.flush();
@@ -210,8 +263,6 @@ public class UtilityMethods
 
     }
 
-
-
     static Double costCalc(ArrayList<Location> locations, Location start, Location end, Double rate)
     {
         Double cost;
@@ -236,12 +287,13 @@ public class UtilityMethods
     {
         String id;
 
-        ArrayList<Integer> numList = new ArrayList<>();
+        if(numList.isEmpty())
+        {
+            for(int i=0; i<1001; i++)
+                numList.add(i);
 
-        for(int i=0; i<101; i++)
-            numList.add(i);
-
-        Collections.shuffle(numList);
+            Collections.shuffle(numList);
+        }
 
         id = Integer.toString(numList.get(j++));
 

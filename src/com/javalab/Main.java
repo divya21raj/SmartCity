@@ -288,13 +288,29 @@ public class Main
 
     private static void dronesInit() throws IOException, ClassNotFoundException
     {
-        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").exists()))
-            Files.copy(new File("files/City/drones_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        for(int i=0; i<city.locations.size(); i++)
+        {
+            CopDrone copDrone = new CopDrone();
+            copDrone.setCurrentLocation(city.locations.get(i));
+            TourGuideDrone tourGuideDrone = new TourGuideDrone();
+            tourGuideDrone.setCurrentLocation(city.locations.get(i));
+            FunnyDrone funnyDrone = new FunnyDrone();
+            funnyDrone.setCurrentLocation(city.locations.get(i));
+            MessengerDrone messengerDrone = new MessengerDrone(users);
+            messengerDrone.setCurrentLocation((city.locations.get(i)));
+            city.locations.get(i).getDrones().add(copDrone);
+            city.locations.get(i).getDrones().add(tourGuideDrone);
+            city.locations.get(i).getDrones().add(funnyDrone);
+            city.locations.get(i).getDrones().add(messengerDrone);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_at_Locations.txt"));
+        }
 
-        int i=0;
+        if(!(new File(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt").exists()))
+            Files.copy(new File("files/City/drones_not_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
 
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+"/SmartCity/drones_not_at_Locations.txt"));
+
+        int j=0;
         while (true)
         {
             String droneLine = bufferedReader.readLine();
@@ -308,35 +324,11 @@ public class Main
             {
                 String drone = stringTokenizer.nextToken().trim();
 
-                switch (drone)
-                {
-                    case "Cop":
-                        CopDrone copDrone = new CopDrone();
-                        copDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(copDrone);
-                        break;
-
-                    case "TourGuide":
-                        TourGuideDrone tourGuideDrone = new TourGuideDrone();
-                        tourGuideDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(tourGuideDrone);
-                        break;
-
-                    case "Funny":
-                        FunnyDrone funnyDrone = new FunnyDrone();
-                        funnyDrone.setCurrentLocation(city.locations.get(i));
-                        city.locations.get(i).getDrones().add(funnyDrone);
-                        break;
-
-                    case "Messenger":
-                        MessengerDrone messengerDrone = new MessengerDrone(users);
-                        messengerDrone.setCurrentLocation((city.locations.get(i)));
-                        city.locations.get(i).getDrones().add(messengerDrone);
-                        break;
-                }
+                if(!drone.equals(""))
+                removeDrone(drone, city.locations.get(j));
             }
 
-            i++;
+            j++;
         }
     }
 
