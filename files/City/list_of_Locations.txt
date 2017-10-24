@@ -1,7 +1,24 @@
 DH1
 DH2
+Stalin
 Mini Mart
+Hostel:1A
 Hostel:1B
+Visitor's Hostel
+Hostel:2A
 Hostel:2B
+Hostel:2C
+Hostel:3A
+Hostel:3B
+Hostel:3C
 Library
+Academic Block A
+Academic Block B
+Academic Block C
+Academic Block D
 SNU Lake
+Indoor Sports Complex
+Cricket Ground
+Basketball Courts
+SNU Chess Board
+Football Ground

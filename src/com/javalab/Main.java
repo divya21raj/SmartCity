@@ -31,7 +31,7 @@ public class Main
     {
         int cho;
 
-        city = new City("SNU", 2d);
+        city = new City("SNU", 0.1d);
 
         initUsers();
 
@@ -56,11 +56,10 @@ public class Main
 
     private static void mainScreen() throws IOException, ClassNotFoundException
     {
-        clrscr();
-
         int cho;
         do
         {
+            clrscr();
             displayMessages();
 
             System.out.println("");
