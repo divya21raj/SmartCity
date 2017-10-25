@@ -8,4 +8,4 @@ This multiple user feature can be made as an online model, but currently it's al
 to quit the program before another user can use it.
 
 Current Status:
--Everything works except the TourGuide and Cop
+-Everything works except the Cop Drone, Mini Mart.
