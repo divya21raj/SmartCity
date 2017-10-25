@@ -49,7 +49,7 @@ public class UtilityMethods
         }
 
         System.out.printf("\n%d.To previous menu\n", i);
-        System.out.printf("Enter location no.(1 - %d):\n", city.locations.size());
+        System.out.printf("Enter location no.(1 - %d):\n", city.locations.size() + 1);
 
     }
 
@@ -195,6 +195,12 @@ public class UtilityMethods
         return indices;
     }
 
+    public static void checkInvalidInput(int maxLimit, int input) throws Exception
+    {
+        if(input>maxLimit)
+            throw new Exception();
+    }
+
     static public void saveMessages(ArrayList<Message> messages) throws IOException
     {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "messages"));
@@ -305,10 +311,6 @@ public class UtilityMethods
         nbufferedWriter.close();
         lbufferedWriter.close();
         mbufferedWriter.close();
-
-        //////////////////\\//////////Drone Positions/////////////////////////////////////////
-
-
 
     }
 

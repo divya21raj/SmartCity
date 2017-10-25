@@ -42,8 +42,19 @@ public class Main
 
         do
         {
-            System.out.printf("\n1.Start\n2.Exit\n");
-            cho = Integer.parseInt(bufferedReader.readLine());
+            do
+            {
+                try
+                {
+                    System.out.printf("\n1.Start\n2.Exit\n");
+                    cho = Integer.parseInt(bufferedReader.readLine());
+                    checkInvalidInput(2, cho);
+                } catch (Exception e)
+                {
+                    System.out.println("Invalid Input!");
+                    cho = -1;
+                }
+            }while (cho <= 0 );
 
             if(cho == 1)
             {
@@ -70,9 +81,19 @@ public class Main
             System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " knowledgeable drones flying around, try talking to them...");
 
 
-            System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Walk to some place else\n3.Call a cab\n4.Log out\n");
-
-            cho = Integer.parseInt(bufferedReader.readLine());
+            do
+            {
+                try
+                {
+                    System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Walk to some place else\n3.Call a cab\n4.Log out\n");
+                    cho = Integer.parseInt(bufferedReader.readLine());
+                    checkInvalidInput(4, cho);
+                } catch (Exception e)
+                {
+                    System.out.println("Invalid Input!");
+                    cho = -1;
+                }
+            } while (cho <=0);
 
             switch(cho)
             {
@@ -106,15 +127,28 @@ public class Main
 
         do
         {
-            System.out.println("What drone do you want to talk to?: ");
-            for (Drone drone: currentUser.getLocation().getDrones())
+            do
             {
-                droneName = droneType(drone);
-                System.out.printf("%d. %s drone\n", i++, droneName);
-            }
-            System.out.printf("%d. To previous menu\n", i);
+                try
+                {
+                    System.out.println("What drone do you want to talk to?: ");
+                    for (Drone drone: currentUser.getLocation().getDrones())
+                    {
+                        droneName = droneType(drone);
+                        System.out.printf("%d. %s drone\n", i++, droneName);
+                    }
+                    System.out.printf("%d. To previous menu\n", i);
+    
+                    cho = Integer.parseInt(bufferedReader.readLine());
+                    checkInvalidInput(i, cho);
 
-            cho = Integer.parseInt(bufferedReader.readLine());
+                } catch (Exception e)
+                {
+                    System.out.println("Invalid Input!");
+                    cho = -1;
+                    i = 1;
+                }
+            } while (cho<=0);
 
             if(cho != i)
             {
@@ -176,6 +210,7 @@ public class Main
     {
         Scanner scanner = new Scanner(System.in);
 
+        int cho = 0;
 
         System.out.println("Please enter name: ");
         String name = bufferedReader.readLine();
@@ -185,10 +220,24 @@ public class Main
         if(index == -1)
         {
 
-            System.out.println("Choose starting location: ");
-            printLocations(city);
+            do
+            {
+                try
+                {
+                    System.out.println("Choose starting location: ");
+                    printLocations(city);
 
-            Location location = numSelectiontoLocation(Integer.parseInt(bufferedReader.readLine()), city.locations);
+                    cho = Integer.parseInt(bufferedReader.readLine());
+                    checkInvalidInput(city.locations.size() + 1, cho);
+
+                } catch (Exception e)
+                {
+                    System.out.println("Invalid Input");
+                    cho = -1;
+                }
+            } while (cho>=0);
+
+            Location location = numSelectiontoLocation(cho, city.locations);
 
             currentUser = new User(name, location, 200000d);
             users.add(currentUser);

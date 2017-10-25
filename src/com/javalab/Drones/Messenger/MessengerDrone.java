@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import static com.javalab.Main.getCurrentUser;
 import static com.javalab.Main.getUsers;
+import static com.javalab.UtilityMethods.checkInvalidInput;
 import static com.javalab.UtilityMethods.checkUsers;
 import static com.javalab.UtilityMethods.saveMessages;
 
@@ -29,9 +30,20 @@ public class MessengerDrone extends Drone
         System.out.println("Hey! My name is Messenger bot " + this.getId());
         do
         {
-            System.out.println("What do you want to do?:");
-            System.out.printf("1.Send a message to someone...\n2.To previous menu\n");
-            cho = Integer.parseInt(bufferedReader.readLine());
+            do
+            {
+                try
+                {
+                    System.out.println("What do you want to do?:");
+                    System.out.printf("1.Send a message to someone...\n2.To previous menu\n");
+                    cho = Integer.parseInt(bufferedReader.readLine());
+                    checkInvalidInput(2, cho);
+                } catch (Exception e)
+                {
+                    System.out.println("Invalid Input");
+                    cho = -1;
+                }
+            } while (cho<=0);
 
             if(cho == 1)
             {
@@ -85,9 +97,7 @@ public class MessengerDrone extends Drone
 
             objectInputStream.close();
         }catch (EOFException e)
-        {
-            System.out.println("EOF");
-        }
+        {}
     }
 
     public MessengerDrone() throws IOException, ClassNotFoundException

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
+import static com.javalab.UtilityMethods.checkInvalidInput;
 import static com.javalab.UtilityMethods.findNearest;
 
 public class TourGuideDrone extends Drone
@@ -26,9 +27,21 @@ public class TourGuideDrone extends Drone
         Location nearestLocation;
 
         System.out.println("Hello! My name is TourGuide Drone " + this.getId());
-        System.out.println("What do you like out of the following?:");
-        System.out.printf("1. Studying\n2. Shopping\n3. Eating\n4. Sports\n5. To previous menu\n");
-        cho = Integer.parseInt(bufferedReader.readLine());
+
+        do
+        {
+            try
+            {
+                System.out.println("What do you like out of the following?:");
+                System.out.printf("1. Studying\n2. Shopping\n3. Eating\n4. Sports\n5. To previous menu\n");
+                cho = Integer.parseInt(bufferedReader.readLine());
+                checkInvalidInput(5, cho);
+            } catch (Exception e)
+            {
+                System.out.println("Invalid Input!");
+                cho = -1;
+            }
+        } while (cho<=0);
 
         if(cho != 5)
         {
