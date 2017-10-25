@@ -37,6 +37,7 @@ public class MessengerDrone extends Drone
             {
                 sendMessage(currentUser, users);
             }
+
         }while(cho != 2);
     }
 

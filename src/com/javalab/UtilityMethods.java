@@ -1,5 +1,6 @@
 package com.javalab;
 
+import com.javalab.City.Category;
 import com.javalab.City.City;
 import com.javalab.City.Location;
 import com.javalab.Drones.CopDrone;
@@ -11,17 +12,18 @@ import com.javalab.Misc.ShortestPath;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
 public class UtilityMethods
 {
 
-    static String fileSeperator = File.separator;
+    private static String fileSeperator = File.separator;
     
     //For randomID
     private static int j = 0;
-    static ArrayList<Integer> numList = new ArrayList<>();
+    private static ArrayList<Integer> numList = new ArrayList<>();
     ///
 
     static void clrscr()
@@ -30,6 +32,36 @@ public class UtilityMethods
             System.out.println();
     }
 
+    public static void addCategory(String categoryName, ArrayList<Category> locationCategories, Location location)
+    {
+        int index = -1;
+
+        for(Category category: locationCategories)
+        {
+            if(category.name.equals(categoryName))
+            {
+                index = locationCategories.indexOf(category);
+                break;
+            }
+        }
+
+        if(index == -1)
+        {
+            ArrayList<Location> locations = new ArrayList<>();
+            locations.add(location);
+
+            Category category = new Category(categoryName, locations);
+            category.locations.get(locations.size()-1).category = category;
+
+            locationCategories.add(category);
+        }
+
+        else
+        {
+            location.category = locationCategories.get(index);
+            locationCategories.get(index).locations.add(location);
+        }
+    }
     static void removeDrone(String droneType, Location location) throws IOException, ClassNotFoundException
     {
         Iterator<Drone> iterator;
@@ -246,7 +278,7 @@ public class UtilityMethods
 
     static Double costCalc(City city, ArrayList<Location> locations, Location start, Location end, Double rate)
     {
-        Double cost = null;
+        Double cost;
 
         int endIndex = 0;
 
@@ -266,6 +298,27 @@ public class UtilityMethods
 
         return cost;
     }
+
+    public static Location findNearest(Double dist[], String categoryName)
+    {
+        Double distance = Double.MAX_VALUE;
+
+        City city = Main.getCity();
+
+        Location nearestLocation = null;
+
+        for(int i=0; i<dist.length; i++)
+        {
+            if(city.getLocations().get(i).category.name.equals(categoryName) && dist[i] < distance)
+            {
+                nearestLocation = Main.getCity().getLocations().get(i);
+                distance = dist[i];
+            }
+        }
+
+        return nearestLocation;
+    }
+
 
     static String randomID()
     {

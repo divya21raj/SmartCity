@@ -7,16 +7,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+import static com.javalab.UtilityMethods.addCategory;
+
 public class City
 {
-    String name;
+    private String name;
 
     public ArrayList<Location> locations;
+    private ArrayList<Category> locationCategories;
     public Double cabRate;
 
     public Double[][] locationDistanceGraph;
 
-    static String fileSeperator = File.separator;
+    private static String fileSeparator = File.separator;
 
     public City(String name, Double cabRate) throws IOException
     {
@@ -24,21 +27,39 @@ public class City
         this.cabRate = cabRate;
 
         locations = new ArrayList<>();
+        locationCategories = new ArrayList<>();
 
-        FileReader fileReader = new FileReader("files"+fileSeperator+"City"+fileSeperator+"list_of_Locations.txt");
+        FileReader fileReader = new FileReader("files"+ fileSeparator +"City"+ fileSeparator +"list_of_Locations.txt");
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         while(true)
         {
             String location = bufferedReader.readLine();
+            String locationName = null, locationCategory;
+
 
             if(location == null)
                 break;
 
-            locations.add(new Location(location));
+            StringTokenizer stringTokenizer = new StringTokenizer(location, ",");
+            int k = 0;
+
+            while (stringTokenizer.hasMoreTokens())
+            {
+                if(k%2 == 0)
+                    locationName = stringTokenizer.nextToken();
+                else
+                {
+                    locationCategory = stringTokenizer.nextToken().trim();
+                    Location temp = new Location(locationName);
+                    locations.add(temp);
+                    addCategory(locationCategory, locationCategories, temp);
+                }
+                k++;
+            }
         }
 
-        fileReader = new FileReader("files"+fileSeperator+"City"+fileSeperator+"distance_between_Locations.txt");
+        fileReader = new FileReader("files"+ fileSeparator +"City"+ fileSeparator +"distance_between_Locations.txt");
         bufferedReader = new BufferedReader(fileReader);
 
         int i = 0, j;

@@ -1,24 +1,24 @@
-DH1
-DH2
-Stalin
-Mini Mart
-Hostel:1A
-Hostel:1B
-Visitor's Hostel
-Hostel:2A
-Hostel:2B
-Hostel:2C
-Hostel:3A
-Hostel:3B
-Hostel:3C
-Library
-Academic Block A
-Academic Block B
-Academic Block C
-Academic Block D
-SNU Lake
-Indoor Sports Complex
-Cricket Ground
-Basketball Courts
-SNU Chess Board
-Football Ground
+DH1, Food
+DH2, Food
+Stalin, Food
+Mini Mart, Shopping
+Hostel:1A, Nothing
+Hostel:1B, Nothing
+Visitor's Hostel, Nothing
+Hostel:2A, Nothing
+Hostel:2B, Nothing
+Hostel:2C, Nothing
+Hostel:3A, Nothing
+Hostel:3B, Nothing
+Hostel:3C, Nothing
+Library, Study
+Academic Block A, Study
+Academic Block B, Study
+Academic Block C, Study
+Academic Block D, Study
+SNU Lake, Relax
+Indoor Sports Complex, Sports
+Cricket Ground, Sports
+Basketball Courts, Sports
+SNU Chess Board, Sports
+Football Ground, Sports

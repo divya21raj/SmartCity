@@ -27,7 +27,7 @@ public class Main
 
     private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    static String fileSeperator = File.separator;
+    private static String fileSeparator = File.separator;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
@@ -307,10 +307,10 @@ public class Main
 
         }
 
-        if(!(new File(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt").exists()))
-            Files.copy(new File("files"+fileSeperator+"City"+fileSeperator+"drones_not_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
+        if(!(new File(System.getProperty("user.home")+ fileSeparator +"SmartCity"+ fileSeparator +"drones_not_at_Locations.txt").exists()))
+            Files.copy(new File("files"+ fileSeparator +"City"+ fileSeparator +"drones_not_at_Locations.txt").toPath(), new File(System.getProperty("user.home")+ fileSeparator +"SmartCity"+ fileSeparator +"drones_not_at_Locations.txt").toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+fileSeperator+"SmartCity"+fileSeperator+"drones_not_at_Locations.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home")+ fileSeparator +"SmartCity"+ fileSeparator +"drones_not_at_Locations.txt"));
 
         int j=0;
         while (true)
@@ -338,9 +338,9 @@ public class Main
     {
         setupSaving();
 
-        BufferedReader nbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Names.txt"));
-        BufferedReader lbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Locations.txt"));
-        BufferedReader mbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeperator+"SmartCity"+fileSeperator+"Money.txt"));
+        BufferedReader nbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeparator +"SmartCity"+ fileSeparator +"Names.txt"));
+        BufferedReader lbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeparator +"SmartCity"+ fileSeparator +"Locations.txt"));
+        BufferedReader mbufferedReader = new BufferedReader(new FileReader(System.getProperty("user.home") + fileSeparator +"SmartCity"+ fileSeparator +"Money.txt"));
 
         while(true)
         {

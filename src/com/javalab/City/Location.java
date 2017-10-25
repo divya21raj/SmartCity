@@ -9,8 +9,9 @@ import java.util.ArrayList;
 public class Location
 {
     public String name;
-    public ArrayList<Location> adjacentLocations;
-    public ArrayList<Double> adjacentLocationDistance;
+    private ArrayList<Location> adjacentLocations;
+    ArrayList<Double> adjacentLocationDistance;
+    public Category category;
 
     private ArrayList<Drone> drones;
 
