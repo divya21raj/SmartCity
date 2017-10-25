@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Category
 {
-    public String name;
+    public final String name;
     public ArrayList<Location> locations;
 
     public Category(String name, ArrayList<Location> locations)

@@ -11,7 +11,7 @@ import static com.javalab.UtilityMethods.addCategory;
 
 public class City
 {
-    private String name;
+    private final String name;
 
     public ArrayList<Location> locations;
     private ArrayList<Category> locationCategories;
@@ -94,18 +94,22 @@ public class City
     /////////////////////////////////////GETTERS & SETTERS//////////////////////////////////
 
 
-    public String getName()
-    {
-        return name;
-    }
+// --Commented out by Inspection START (25/10/2017 20:16):
+//    public String getName()
+//    {
+//        return name;
+//    }
+// --Commented out by Inspection STOP (25/10/2017 20:16)
 
     public ArrayList<Location> getLocations()
     {
         return locations;
     }
 
-    public Double getCabRate()
-    {
-        return cabRate;
-    }
+// --Commented out by Inspection START (25/10/2017 20:16):
+//    public Double getCabRate()
+//    {
+//        return cabRate;
+//    }
+// --Commented out by Inspection STOP (25/10/2017 20:16)
 }

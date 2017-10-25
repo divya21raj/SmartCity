@@ -10,7 +10,7 @@ public class ShortestPath
 {
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
-    static final int V = Main.getCity().locations.size();
+    private static final int V = Main.getCity().locations.size();
 
     private int minDistance(Double[] dist, Boolean[] sptSet)
     {
@@ -26,14 +26,6 @@ public class ShortestPath
             }
 
         return min_index;
-    }
-
-    // A utility function to print the constructed distance array
-    void printSolution(Double[] dist, int n)
-    {
-        System.out.println("Vertex   Distance from Source");
-        for (int i = 0; i < V; i++)
-            System.out.println(i+" tt "+dist[i]);
     }
 
     // Function that implements Dijkstra's single source shortest path

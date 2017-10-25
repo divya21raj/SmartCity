@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 public class Message implements Serializable
 {
-    User sender, receiver;
+    private User sender, receiver;
 
-    ArrayList<String> text;
+    private ArrayList<String> text;
 
-    Boolean read;
+    private Boolean read;
 
     Message(User sender, User receiver, ArrayList<String> text)
     {
@@ -38,28 +38,34 @@ public class Message implements Serializable
         return sender;
     }
 
-    public void setSender(User sender)
-    {
-        this.sender = sender;
-    }
+// --Commented out by Inspection START (25/10/2017 20:13):
+//    public void setSender(User sender)
+//    {
+//        this.sender = sender;
+//    }
+// --Commented out by Inspection STOP (25/10/2017 20:13)
 
     public User getReceiver()
     {
         return receiver;
     }
 
-    public void setReceiver(User receiver)
-    {
-        this.receiver = receiver;
-    }
+// --Commented out by Inspection START (25/10/2017 20:13):
+//    public void setReceiver(User receiver)
+//    {
+//        this.receiver = receiver;
+//    }
+// --Commented out by Inspection STOP (25/10/2017 20:13)
 
     public ArrayList<String> getText()
     {
         return text;
     }
 
-    public void setText(ArrayList<String> text)
-    {
-        this.text = text;
-    }
+// --Commented out by Inspection START (25/10/2017 20:13):
+//    public void setText(ArrayList<String> text)
+//    {
+//        this.text = text;
+//    }
+// --Commented out by Inspection STOP (25/10/2017 20:13)
 }

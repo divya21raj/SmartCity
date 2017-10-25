@@ -9,13 +9,12 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Scanner;
 
-import static com.javalab.Main.getCity;
 import static com.javalab.Main.mainScreen;
 import static com.javalab.UtilityMethods.*;
 
 public class User implements Serializable
 {
-    private String name;
+    private final String name;
     private transient Location location; //location was not serializable
     private Double money;
 
@@ -76,7 +75,7 @@ public class User implements Serializable
             {
                 Location newLocation = numSelectiontoLocation(cho, city.locations);
 
-                Double travelCost = costCalc(city, city.locations, location, newLocation, city.cabRate);
+                Double travelCost = costCalc(city, city.locations, location, newLocation);
 
                 System.out.println("That'll be " + travelCost + " Rs.");
                 System.out.println("Press enter to take the ride...");
@@ -128,8 +127,7 @@ public class User implements Serializable
 
         if(cho!=i)
         {
-            Location newlocation = location.getAdjacentLocations().get(cho-1);
-            location = newlocation;
+            location = location.getAdjacentLocations().get(cho-1);
             mainScreen();
             //Do some health thingy here
         }

@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 
 import static com.javalab.UtilityMethods.*;
 
+@SuppressWarnings("ConstantConditions")
 public class Main
 {
     private static User currentUser;
@@ -27,7 +28,7 @@ public class Main
 
     private static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-    private static String fileSeparator = File.separator;
+    private static final String fileSeparator = File.separator;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException
     {
@@ -50,7 +51,7 @@ public class Main
 
                 mainScreen();
 
-                saveProgress(users, city.locations);
+                saveProgress(users);
             }
 
         }while(cho == 1);
@@ -137,7 +138,7 @@ public class Main
             {
                 messages = ((MessengerDrone) drone).getMessages();
 
-                ArrayList<Integer> messageIndices = checkUserInMessages(currentUser.getName(), messages, users);
+                ArrayList<Integer> messageIndices = checkUserInMessages(currentUser.getName(), messages);
 
                 if(!messageIndices.isEmpty())
                 {
@@ -173,7 +174,6 @@ public class Main
 
     private static void userInit() throws IOException
     {
-        int i = 0;
         Scanner scanner = new Scanner(System.in);
 
 

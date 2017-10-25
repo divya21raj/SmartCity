@@ -12,14 +12,13 @@ import com.javalab.Misc.ShortestPath;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
 public class UtilityMethods
 {
 
-    private static String fileSeperator = File.separator;
+    private static final String fileSeparator = File.separator;
     
     //For randomID
     private static int j = 0;
@@ -84,7 +83,7 @@ public class UtilityMethods
             locationCategories.get(index).locations.add(location);
         }
     }
-    static void removeDrone(String droneType, Location location) throws IOException, ClassNotFoundException
+    static void removeDrone(String droneType, Location location)
     {
         Iterator<Drone> iterator;
 
@@ -135,19 +134,19 @@ public class UtilityMethods
 
     static void setupSaving() throws IOException
     {
-        File namefile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Names.txt");
-        File locfile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Locations.txt");
-        File moneyfile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Money.txt");
-        File messagefile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "messages");
-        if(!namefile.exists())
+        File nameFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Names.txt");
+        File locFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Locations.txt");
+        File moneyFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Money.txt");
+        File messageFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "messages");
+        if(!nameFile.exists())
         {
-            namefile.getParentFile().mkdirs();
-            namefile.createNewFile();
-            locfile.createNewFile();
-            moneyfile.createNewFile();
+            nameFile.getParentFile().mkdirs();
+            nameFile.createNewFile();
+            locFile.createNewFile();
+            moneyFile.createNewFile();
 
-            messagefile.getParentFile().mkdirs();
-            messagefile.createNewFile();
+            messageFile.getParentFile().mkdirs();
+            messageFile.createNewFile();
         }
     }
 
@@ -157,7 +156,7 @@ public class UtilityMethods
 
         for (Location l: locations)
         {
-            if (l.name.equals(locationName));
+            if (l.name.equals(locationName))
             {
                 location = l;
                 break;
@@ -175,7 +174,7 @@ public class UtilityMethods
         }
     }
 
-    static ArrayList<Integer> checkUserInMessages(String name, ArrayList<Message> messages, ArrayList<User> users) throws IOException
+    static ArrayList<Integer> checkUserInMessages(String name, ArrayList<Message> messages)
     {
         ArrayList<Integer> indices = new ArrayList<>();
 
@@ -198,7 +197,7 @@ public class UtilityMethods
 
     static public void saveMessages(ArrayList<Message> messages) throws IOException
     {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "messages"));
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "messages"));
 
         objectOutputStream.writeObject(messages);
 
@@ -216,7 +215,7 @@ public class UtilityMethods
         return location;
     }
 
-    public static int checkUsers(String userName, ArrayList<User> users) throws IOException
+    public static int checkUsers(String userName, ArrayList<User> users)
     {
         int index = -1;
 
@@ -250,15 +249,15 @@ public class UtilityMethods
 
     static void writeUser(User user) throws IOException
     {
-        FileWriter namefile = new FileWriter(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Names.txt", true);
+        FileWriter nameFile = new FileWriter(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Names.txt", true);
 
-        FileWriter locfile = new FileWriter(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Locations.txt", true);
+        FileWriter locFile = new FileWriter(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Locations.txt", true);
 
-        FileWriter moneyfile = new FileWriter(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Money.txt", true);
+        FileWriter moneyFile = new FileWriter(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Money.txt", true);
 
-        BufferedWriter nbufferedWriter = new BufferedWriter(namefile);
-        BufferedWriter lbufferedWriter = new BufferedWriter(locfile);
-        BufferedWriter mbufferedWriter = new BufferedWriter(moneyfile);
+        BufferedWriter nbufferedWriter = new BufferedWriter(nameFile);
+        BufferedWriter lbufferedWriter = new BufferedWriter(locFile);
+        BufferedWriter mbufferedWriter = new BufferedWriter(moneyFile);
 
 
         nbufferedWriter.write(user.getName());
@@ -273,21 +272,21 @@ public class UtilityMethods
         mbufferedWriter.close();
     }
 
-    static void saveProgress(ArrayList<User> users, ArrayList<Location> locations) throws IOException
+    static void saveProgress(ArrayList<User> users) throws IOException
     {
         ////////////////////////////////Users' names, money, locations///////////////////////////////////////////////////////
-        File namefile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Names.txt");
-        namefile.getParentFile().mkdirs();
+        File nameFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Names.txt");
+        nameFile.getParentFile().mkdirs();
 
-        File locfile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Locations.txt");
-        locfile.getParentFile().mkdirs();
+        File locFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Locations.txt");
+        locFile.getParentFile().mkdirs();
 
-        File moneyfile = new File(System.getProperty("user.home") + fileSeperator + "SmartCity" + fileSeperator + "Money.txt");
-        moneyfile.getParentFile().mkdirs();
+        File moneyFile = new File(System.getProperty("user.home") + fileSeparator + "SmartCity" + fileSeparator + "Money.txt");
+        moneyFile.getParentFile().mkdirs();
 
-        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter(namefile));
-        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter(locfile));
-        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter(moneyfile));
+        BufferedWriter nbufferedWriter = new BufferedWriter(new FileWriter(nameFile));
+        BufferedWriter lbufferedWriter = new BufferedWriter(new FileWriter(locFile));
+        BufferedWriter mbufferedWriter = new BufferedWriter(new FileWriter(moneyFile));
 
         nbufferedWriter.flush();
         lbufferedWriter.flush();
@@ -313,7 +312,7 @@ public class UtilityMethods
 
     }
 
-    static Double costCalc(City city, ArrayList<Location> locations, Location start, Location end, Double rate)
+    static Double costCalc(City city, ArrayList<Location> locations, Location start, Location end)
     {
         Double cost;
 
