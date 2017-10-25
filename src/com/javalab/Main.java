@@ -56,7 +56,7 @@ public class Main
         }while(cho == 1);
     }
 
-    private static void mainScreen() throws IOException, ClassNotFoundException
+    public static void mainScreen() throws IOException, ClassNotFoundException
     {
         int cho;
         do
@@ -69,7 +69,7 @@ public class Main
             System.out.println("This place has " + Integer.toString(currentUser.getLocation().getDrones().size()) + " knowledgeable drones flying around, try talking to them...");
 
 
-            System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Go some place else\n3.Log out\n");
+            System.out.printf("\nWhat do you want to do?\n1.Talk to one of the drones\n2.Walk to some place else\n3.Call a cab\n4.Log out\n");
 
             cho = Integer.parseInt(bufferedReader.readLine());
 
@@ -80,16 +80,21 @@ public class Main
                     break;
 
                 case 2:
-                    changeLocation();
-                    cho = 3;
+                    currentUser.walk();
+                    cho = 4;
+                    break;
+
+                case 3:
+                    currentUser.takeCab(city);
+                    cho = 4;
                     break;
 
                 default:
-                    cho = 3;
+                    cho = 4;
                     break;
             }
 
-        }while (cho != 3);
+        }while (cho != 4);
 
     }
 
@@ -162,90 +167,8 @@ public class Main
                 }
             }
         }
-        
+
         saveMessages(messages);
-    }
-
-    private static void changeLocation() throws IOException, ClassNotFoundException
-    {
-        int i, cho, chom;
-
-        Scanner scanner = new Scanner(System.in);
-
-        do
-        {
-            i=1;
-            System.out.println("Where to?:");
-
-            for(Location location: city.locations)
-                System.out.printf("%d. %s\n", i++, location.name);
-
-            System.out.printf("%d. To previous menu...\n", i);
-            cho = Integer.parseInt(bufferedReader.readLine());
-
-            if(cho != i)
-            {
-                do
-                {
-                    Location newLocation = numSelectiontoLocation(cho, city.locations);
-                    System.out.printf("\nChoose mode of transport:\n1. Cab\n2. Feet\n3. Choose another location\n");
-                    chom = Integer.parseInt(bufferedReader.readLine());
-
-                    if(chom == 1)
-                    {
-                        Double travelCost = costCalc(city, city.locations, currentUser.getLocation(), newLocation, city.cabRate);
-
-                        System.out.println("That'll be " + travelCost + " Rs.");
-                        System.out.println("Press enter to continue...");
-                        scanner.nextLine();
-
-                        if(currentUser.getMoney() < travelCost)
-                        {
-                            System.out.println("You're not rich enough to do this....you can do one of the following:");
-                            System.out.printf("1.Take this cab to the Mini Mart ATM\n2.Walk\n");
-
-                            int chop = Integer.parseInt(bufferedReader.readLine());
-
-                            if(chop == 1)
-                            {
-                                currentUser.setLocation(numSelectiontoLocation(2, city.locations));
-                                currentUser.setMoney(currentUser.getMoney() - travelCost);
-                                mainScreen();
-                            }
-
-                            else
-                            {
-                                currentUser.setLocation(newLocation);
-                                mainScreen();
-                                chom = 3;
-                                cho = i;
-                                //do some health thingy here
-                            }
-                        }
-
-                        else
-                        {
-                            currentUser.setMoney(currentUser.getMoney() - travelCost);
-                            currentUser.setLocation(newLocation);
-                            mainScreen();
-                            chom = 3;
-                            cho = i;
-                        }
-                    }
-
-                    else if(chom == 2)
-                    {
-                        currentUser.setLocation(newLocation);
-                        mainScreen();
-                        chom = 3;
-                        cho = i;
-                    }
-
-                }while (chom != 3);
-            }
-
-        }while (cho != i);
-
     }
 
     private static void userInit() throws IOException
@@ -263,11 +186,7 @@ public class Main
         {
 
             System.out.println("Choose starting location: ");
-            for(Location location: city.locations)
-            {
-                i++;
-                System.out.printf("%d. %s\n", i, location.name);
-            }
+            printLocations(city);
 
             Location location = numSelectiontoLocation(Integer.parseInt(bufferedReader.readLine()), city.locations);
 

@@ -62,7 +62,7 @@ public class City
         fileReader = new FileReader("files"+ fileSeparator +"City"+ fileSeparator +"distance_between_Locations.txt");
         bufferedReader = new BufferedReader(fileReader);
 
-        int i = 0, j;
+        int i = 0, j, k;
         locationDistanceGraph = new Double[locations.size()][locations.size()];
 
         for(Location location : locations)
@@ -72,12 +72,18 @@ public class City
             StringTokenizer tokenizer = new StringTokenizer(distanceLine, ",");
 
             j = 0;
+            k = 0;
             while(tokenizer.hasMoreTokens())
             {
                 Double distance = Double.parseDouble(tokenizer.nextToken().trim());
 
+                if(distance != 0d)
+                    location.adjacentLocations.add(locations.get(k));
+
                 location.adjacentLocationDistance.add(distance);
                 this.locationDistanceGraph[i][j++] = distance;
+
+                k++;
             }
 
             i++;

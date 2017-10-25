@@ -32,6 +32,28 @@ public class UtilityMethods
             System.out.println();
     }
 
+    public static void printLocations(City city)
+    {
+        Category category = city.getLocations().get(0).category;
+        int i=1;
+
+        for(Location location: city.getLocations())
+        {
+            if(!location.category.equals(category))
+            {
+                System.out.printf("\n%d.%-19s\t", i++, location.name);
+                category = location.category;
+            }
+
+            else
+                System.out.printf("%d.%-19s\t", i++, location.name);
+        }
+
+        System.out.printf("\n%d.To previous menu\n", i);
+        System.out.printf("Enter location no.(1 - %d):\n", city.locations.size());
+
+    }
+
     public static void addCategory(String categoryName, ArrayList<Category> locationCategories, Location location)
     {
         int index = -1;
@@ -129,6 +151,21 @@ public class UtilityMethods
         }
     }
 
+    static Location nameToLocation(String locationName, ArrayList<Location> locations)
+    {
+        Location location = null;
+
+        for (Location l: locations)
+        {
+            if (l.name.equals(locationName));
+            {
+                location = l;
+                break;
+            }
+        }
+
+        return location;
+    }
     static void loadAllMessengerDroneMessages(Location location) throws IOException, ClassNotFoundException
     {
         for(Drone drone: location.getDrones())

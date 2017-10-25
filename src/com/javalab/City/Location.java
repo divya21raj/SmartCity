@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Location
 {
     public String name;
-    private ArrayList<Location> adjacentLocations;
+    ArrayList<Location> adjacentLocations;
     ArrayList<Double> adjacentLocationDistance;
     public Category category;
 
@@ -23,6 +23,28 @@ public class Location
         adjacentLocationDistance = new ArrayList<>();
 
         drones = new ArrayList<>();
+    }
+
+    ////////////////////////////////GETTERS & SETTERS///////////////////////////////////////////////////
+
+    public ArrayList<Location> getAdjacentLocations()
+    {
+        return adjacentLocations;
+    }
+
+    public void setAdjacentLocations(ArrayList<Location> adjacentLocations)
+    {
+        this.adjacentLocations = adjacentLocations;
+    }
+
+    public ArrayList<Double> getAdjacentLocationDistance()
+    {
+        return adjacentLocationDistance;
+    }
+
+    public void setAdjacentLocationDistance(ArrayList<Double> adjacentLocationDistance)
+    {
+        this.adjacentLocationDistance = adjacentLocationDistance;
     }
 
     public ArrayList<Drone> getDrones()
