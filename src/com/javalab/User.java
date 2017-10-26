@@ -31,13 +31,12 @@ public class User implements Serializable
 
     void takeCab(City city) throws IOException, ClassNotFoundException
     {
-        int i, cho;
+        int cho;
 
         Scanner scanner = new Scanner(System.in);
 
         do
         {
-            i=1;
             do
             {
                 try
@@ -55,7 +54,7 @@ public class User implements Serializable
                 }
             } while (cho<=0);
 
-            if(cho != i)
+            if(cho != city.getLocations().size() + 1)
             {
                 Location newLocation = numSelectiontoLocation(cho, city.locations);
 
@@ -90,40 +89,12 @@ public class User implements Serializable
                     money -= travelCost;
                     location = newLocation;
                     Main.mainScreen();
-                    cho = i;
+                    cho = city.getLocations().size();
                 }
             }
 
-        }while (cho != i);
+        }while (cho != city.getLocations().size() + 1);
 
-    }
-
-////////////////////////////////////GETTERS AND SETTERS///////////////////////////////////////////
-
-
-    public Double getMoney()
-    {
-        return money;
-    }
-
-    public void setMoney(Double money)
-    {
-        this.money = money;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public Location getLocation()
-    {
-        return location;
-    }
-
-    public void setLocation(Location location)
-    {
-        this.location = location;
     }
 
     void walk() throws IOException, ClassNotFoundException
@@ -155,6 +126,33 @@ public class User implements Serializable
             Main.mainScreen();
             //Do some health thingy here
         }
+    }
 
+////////////////////////////////////GETTERS AND SETTERS///////////////////////////////////////////
+
+
+    public Double getMoney()
+    {
+        return money;
+    }
+
+    public void setMoney(Double money)
+    {
+        this.money = money;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Location getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(Location location)
+    {
+        this.location = location;
     }
 }

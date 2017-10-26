@@ -7,7 +7,7 @@ public class CopDrone extends Drone
     @Override
     protected void interact()
     {
-
+        System.out.println("Constant Vigilance, Citizen!");
     }
 
     @Override

@@ -27,7 +27,7 @@ public class MessengerDrone extends Drone
         ArrayList<User> users = getUsers();
         User currentUser = getCurrentUser();
 
-        System.out.println("Hey! My name is Messenger bot " + this.getId());
+        System.out.println("Hey! My name is Messenger drone " + this.getId());
         do
         {
             do

@@ -103,12 +103,10 @@ public class Main
 
                 case 2:
                     currentUser.walk();
-                    cho = 4;
                     break;
 
                 case 3:
                     currentUser.takeCab(city);
-                    cho = 4;
                     break;
 
                 default:
@@ -203,14 +201,15 @@ public class Main
             }
         }
 
-        saveMessages(messages);
+        if(messages != null)
+            saveMessages(messages);
     }
 
     private static void userInit() throws IOException
     {
         Scanner scanner = new Scanner(System.in);
 
-        int cho = 0;
+        int cho;
 
         System.out.println("Please enter name: ");
         String name = bufferedReader.readLine();
@@ -222,27 +221,36 @@ public class Main
 
             do
             {
-                try
+                do
                 {
-                    System.out.println("Choose starting location: ");
-                    printLocations(city);
+                    try
+                    {
+                        System.out.println("Choose starting location: ");
+                        printLocations(city);
 
-                    cho = Integer.parseInt(bufferedReader.readLine());
-                    checkInvalidInput(city.locations.size() + 1, cho);
+                        cho = Integer.parseInt(bufferedReader.readLine());
+                        checkInvalidInput(city.locations.size() + 1, cho);
 
-                } catch (Exception e)
+                    } catch (Exception e)
+                    {
+                        System.out.println("Invalid Input");
+                        cho = -1;
+                    }
+                } while (cho<=0);
+
+                if(cho != city.getLocations().size() + 1)
                 {
-                    System.out.println("Invalid Input");
-                    cho = -1;
+
+                    Location location = numSelectiontoLocation(cho, city.locations);
+
+                    currentUser = new User(name, location, 200000d);
+                    users.add(currentUser);
+
+                    writeUser(currentUser);
                 }
-            } while (cho>=0);
 
-            Location location = numSelectiontoLocation(cho, city.locations);
+            } while (cho == city.getLocations().size() + 1);
 
-            currentUser = new User(name, location, 200000d);
-            users.add(currentUser);
-
-            writeUser(currentUser);
         }
 
         else
